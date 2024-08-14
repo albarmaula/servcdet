@@ -1,0 +1,13 @@
+Google Cloud
+
+MySQL instance:
+	ID: servcdet
+	password: 123456
+
+URL:
+https://flask-app-o4ca4obiua-et.a.run.app/
+
+Deploy:
+gcloud config set project solid-scope-415202
+gcloud builds submit --tag gcr.io/solid-scope-415202/flask-app
+gcloud run deploy --image gcr.io/solid-scope-415202/flask-app

@@ -1,0 +1,137 @@
+{% extends "base.html" %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+{% endblock %} {% block content %}
+<!-- Super Admin Add -->
+<div
+  class="headerbg p-3 text-dark mt-4 mb-5"
+  style="height: auto; background-color: white"
+>
+  <div class="container">
+    <div class="row">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('index') }}" style="color: #14335f">Beranda</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('superadmin') }}" style="color: #14335f"
+              >Super Admin</a
+            >
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Tambah Pengguna
+          </li>
+        </ol>
+      </nav>
+      <div class="col-md-6 mx-auto">
+        <form action="{{ url_for('register') }}" method="POST">
+          <h1 class="text-center">Tambah Pengguna</h1>
+          <div class="mb-3">
+            <label
+              for="usernameRegForm"
+              class="form-label"
+              style="margin-top: 20px"
+              >Nama Lengkap:</label
+            >
+            <input
+              type="Text"
+              class="form-control"
+              name="usernameRegForm"
+              id="usernameRegForm"
+              style="border-color: #14335f"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="phoneRegForm" class="form-label">No Telpon:</label>
+            <input
+              type="Text"
+              class="form-control"
+              name="phoneRegForm"
+              id="phoneRegForm"
+              style="border-color: #14335f"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="emailRegForm" class="form-label">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              name="emailRegForm"
+              id="emailRegForm"
+              style="border-color: #14335f"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="passRegForm" class="form-label">Password:</label>
+            <div class="input-group">
+              <input
+                type="password"
+                name="passRegForm"
+                id="passRegForm"
+                class="form-control"
+                style="border-color: #14335f"
+                required
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="togglePassword"
+              >
+                <i class="fa fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="roleRegForm" class="form-label">Peran:</label>
+            <select
+              id="roleRegForm"
+              name="roleRegForm"
+              class="form-select"
+              style="border-color: #14335f"
+              required
+            >
+              <option value="" disabled selected style="display: none">
+                Pilih peran...
+              </option>
+              <option>admin</option>
+              <option>dokter</option>
+              <option>superadmin</option>
+            </select>
+          </div>
+          <input
+            type="submit"
+            value="Tambah"
+            class="btn btn-primary"
+            style="display: block; margin: 0 auto; background-color: #14335f"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous"
+></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+  // Fungsi show password
+  document.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword");
+    const passwordInput = document.querySelector("#passRegForm");
+
+    togglePassword.addEventListener("click", function () {
+      const type =
+        passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+      this.querySelector("i").classList.toggle("fa-eye");
+      this.querySelector("i").classList.toggle("fa-eye-slash");
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+<link
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+  rel="stylesheet"
+/>
+{% endblock %} {% block content %}
+<div
+  class="headerbg p-3 text-dark mt-4"
+  style="height: auto; background-color: white"
+>
+  <div class="container">
+    <div class="row">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('index') }}" style="color: #14335f">Beranda</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('doctor') }}" style="color: #14335f">Dokter</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Deteksi</li>
+        </ol>
+      </nav>
+      <div class="col-md-6 mx-auto mb-5">
+        <form
+          action="{{ url_for('doctor_detect') }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <h1 class="text-center">Form Deteksi Pap Smear</h1>
+          <div style="margin-top: 60px" class="mb-3">
+            <label for="patientDetForm" class="form-label">Nama Pasien:</label>
+            <select
+              id="patientDetForm"
+              name="patientDetForm"
+              class="form-select"
+              style="border-color: #14335f"
+              required
+            >
+              <option value="" disabled selected style="border-color: #14335f">
+                Pilih pasien...
+              </option>
+              {% for patient in patients %}
+              <option value="{{ patient[0] }}">{{ patient[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="imgDetForm"
+              >Pilih citra pap-smear yang akan dideteksi</label
+            >
+            <input
+              type="file"
+              id="imgDetForm"
+              name="imgDetForm"
+              class="form-control"
+              accept="image/*"
+              style="border-color: #14335f"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="submit"
+              value="Deteksi"
+              class="btn btn-primary"
+              style="
+                display: block;
+                margin: 0 auto;
+                background-color: #14335f;
+                margin-top: 20px;
+              "
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#patientDetForm").select2({
+      placeholder: "Pilih pasien...",
+      allowClear: true,
+    });
+  });
+</script>
+{% endblock %}

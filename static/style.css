@@ -1,0 +1,39 @@
+body {
+  font-family: "Radiance";
+}
+.headerbg {
+  background-image: var(--bs-gradient);
+}
+p,
+label {
+  font-size: 19px;
+  text-align: justify;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.delete-btn:hover {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+.breadcrumb-item{
+  color: #14335f;
+}

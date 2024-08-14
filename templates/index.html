@@ -1,0 +1,173 @@
+{% extends "base.html" %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+{% endblock %} {% block content %}
+<!-- Header with image -->
+<div
+  class="headerbg p-3 text-white"
+  style="background-color: #255395; height: auto"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1 style="margin-top: 5%">ServcDet</h1>
+        <p>
+          Selamat datang di ServcDet, tempat di mana teknologi bertemu dengan
+          harapan dalam pertempuran melawan kanker serviks. Kami menggunakan
+          pembelajaran mesin untuk menganalisis citra Pap smear dengan akurasi
+          tinggi, memungkinkan deteksi dini yang vital dalam perawatan kesehatan
+          wanita.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <img
+          class="img-fluid"
+          src="{{ url_for('static', filename='logo.png') }}"
+          alt="Logo"
+          style="max-width: 100%; height: auto"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="contentbg p-3 text-dark" style="margin-top: 20px">
+        <h2>Apa itu kanker serviks?</h2>
+        <p>
+          Kanker adalah penyakit dimana sel-sel dalam tubuh tumbuh di luar
+          kendali. Kanker yang ada pada leher rahim dinamakan kanker serviks.
+          Serviks adalah bagian yang menghubungkan vagina ke bagian uterus
+          (rahim).
+        </p>
+        <p>
+          Kanker serviks merupakan kanker keempat yang paling umum menyerang
+          wanita di seluruh dunia secara global dengan sekitar 660.000 kasus
+          baru dan sekitar 350.000 kematian pada tahun 2022. Saat ini, >85%
+          kematian akibat kanker serviks terjadi di negara-negara berkembang
+          seperti Amerika Latin, Afrika, dan negara-negara lainnya di Asia,
+          termasuk Indonesia. Hal ini mencerminkan kesenjangan besar yang
+          disebabkan oleh kurangnya akses terhadap vaksinasi HPV nasional,
+          layanan skrining dan pengobatan serviks, serta faktor-faktor penentu
+          sosial dan ekonomi.
+        </p>
+        <h2>Penyebab</h2>
+        <p>
+          Human papillomavirus (HPV) adalah infeksi menular seksual umum yang
+          dapat menyerang kulit, area genital, dan tenggorokan. Hampir semua
+          orang yang aktif secara seksual akan tertular pada suatu saat dalam
+          hidupnya, biasanya tanpa gejala. Dalam kebanyakan kasus, sistem
+          kekebalan membersihkan HPV dari tubuh. Infeksi HPV risiko tinggi yang
+          terus-menerus dapat menyebabkan berkembangnya sel-sel abnormal, yang
+          kemudian menjadi kanker.
+        </p>
+        <p>
+          Infeksi HPV yang persisten pada leher rahim jika tidak diobati,
+          menyebabkan 95% kanker serviks. Biasanya, diperlukan waktu 15–20 tahun
+          bagi sel abnormal untuk berubah menjadi kanker, namun pada wanita
+          dengan sistem kekebalan tubuh yang lemah, proses ini bisa lebih cepat
+          dan memakan waktu 5–10 tahun. Faktor risiko perkembangan kanker
+          termasuk tingkat onkogenisitas tipe HPV, status kekebalan, adanya
+          infeksi menular seksual lainnya, jumlah kelahiran, usia kehamilan
+          pertama yang masih muda, penggunaan kontrasepsi hormonal, dan merokok.
+        </p>
+        <h2>Pencegahan</h2>
+        <p>
+          Meningkatkan kesadaran masyarakat, akses terhadap informasi dan
+          layanan adalah kunci pencegahan dan pengendalian sepanjang perjalanan
+          hidup.
+        </p>
+        <h3>Vaksinasi HPV dan pencegahan lain</h3>
+        <p>
+          Pada tahun 2023, terdapat 6 vaksin HPV yang tersedia secara global.
+          Semuanya melindungi terhadap HPV tipe 16 dan 18 risiko tinggi, yang
+          menyebabkan sebagian besar kanker serviks dan telah terbukti aman dan
+          efektif dalam mencegah infeksi HPV dan kanker serviks. Sebagai
+          prioritas, vaksin HPV harus diberikan kepada semua anak perempuan
+          berusia 9–14 tahun, sebelum mereka aktif secara seksual. Vaksin dapat
+          diberikan dalam 1 atau 2 dosis. Orang dengan sistem kekebalan tubuh
+          yang lemah idealnya menerima 2 atau 3 dosis. Beberapa negara juga
+          memilih untuk melakukan vaksinasi pada anak laki-laki untuk mengurangi
+          prevalensi HPV di masyarakat dan mencegah kanker pada pria yang
+          disebabkan oleh HPV.
+        </p>
+        <p>
+          Cara penting lainnya untuk mencegah infeksi HPV meliputi:
+          <br />1)Menjadi bukan perokok atau berhenti merokok
+          <br />2)Menggunakan kondom <br />3)Sunat laki-laki.
+        </p>
+        <h3>Skrining serviks dan pengobatan prakanker</h3>
+        <p>
+          Skrining rutin kanker serviks sangat penting untuk wanita, dengan
+          interval yang disarankan antara 5 hingga 10 tahun, tergantung pada
+          faktor risiko dan kondisi kesehatan individu. Bahkan bagi wanita yang
+          telah divaksinasi terhadap HPV, skrining tetap penting karena
+          precancer jarang menunjukkan gejala. Metode skrining sendiri untuk tes
+          HPV juga menjadi opsi yang layak dan dapat memberikan hasil yang
+          sebanding dengan pengujian oleh tenaga medis. Setelah hasil tes
+          positif, pengobatan prekanker merupakan langkah penting untuk mencegah
+          perkembangan kanker serviks. Proses pengobatan relatif cepat dan
+          jarang menyebabkan komplikasi, dengan berbagai metode yang tersedia,
+          seperti ablasion termal, krioterapi, LEETZ, atau biopsi kerucut.
+          Dengan skrining yang teratur dan pengobatan yang tepat, risiko terkena
+          kanker serviks dapat diminimalkan secara signifikan.
+        </p>
+        <h3>Deteksi dini, diagnosis dan pengobatan kanker serviks</h3>
+        <p>
+          Kanker serviks dapat disembuhkan pada tahap awal jika didiagnosis dan
+          diobati dengan cepat. Penting bagi wanita untuk mengenali gejala dan
+          mencari bantuan medis jika mengalami tanda-tanda seperti berikut.
+          <br />1)Pendarahan yang tidak biasa di antara periode menstruasi,
+          setelah menopause, atau setelah hubungan seksual, <br />2)Keputihan
+          meningkat atau berbau busuk, <br />3)Gejala seperti nyeri
+          terus-menerus di punggung, kaki, atau panggul, <br />4)Penurunan berat
+          badan, kelelahan dan kehilangan nafsu makan, <br />5)Ketidaknyamanan
+          pada vagina, <br />6)Bengkak di kaki.
+        </p>
+        <p>
+          Evaluasi medis dan tes klinis penting untuk memastikan diagnosis yang
+          akurat, dan selanjutnya dapat diikuti dengan perawatan seperti
+          pembedahan, radioterapi, kemoterapi, atau perawatan paliatif untuk
+          mengatasi gejala dan memberikan dukungan yang dibutuhkan. Jalur
+          manajemen yang efisien untuk perawatan kanker serviks merupakan kunci
+          untuk memastikan pasien mendapatkan perawatan yang sesuai dan dukungan
+          yang diperlukan sepanjang perjalanan pengobatan. Intervensi yang
+          berkualitas harus melibatkan tim medis multidisiplin, mengikuti
+          pedoman nasional, dan menyediakan dukungan psikologis, spiritual,
+          fisik, dan paliatif yang holistik. Di negara-negara dengan akses
+          terbatas terhadap skrining serviks, meningkatkan upaya skrining dapat
+          mengakibatkan peningkatan deteksi kanker serviks invasif, sehingga
+          perlu diiringi dengan strategi rujukan dan manajemen yang memadai
+          untuk memastikan pasien mendapatkan perawatan yang tepat.
+        </p>
+
+        <h2>Referensi</h2>
+        <p>
+          [1] A. Ramadhaningtyas dan B. Besral, “Hubungan Seksual Usia Dini
+          Dapat Meningkatkan Risiko Kanker Serviks,” J. Biostat. Kependud. Dan
+          Inform. Kesehat., vol. 1, no. 1, hlm. 46, Nov 2020, doi:
+          10.51181/bikfokes.v1i1.4054.
+        </p>
+        <p>
+          [2] S. L. Bedell, L. S. Goldstein, A. R. Goldstein, dan A. T.
+          Goldstein, “Cervical Cancer Screening: Past, Present, and Future,”
+          Sexual Medicine Reviews, vol. 8, no. 1. Oxford University Press (OUP),
+          hlm. 28–37, Nov 29, 2019. doi: 10.1016/j.sxmr.2019.09.005.
+        </p>
+        <p>
+          [3] World Health Organization. (2024. Mar 5). Cervical cancer
+          [Online]. Available:
+          https://www.who.int/news-room/fact-sheets/detail/cervical-cancer
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous"
+></script>
+{% endblock %}

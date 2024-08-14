@@ -1,0 +1,8 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--no-cache', '-t', 'gcr.io/solid-scope-415202/flask-app', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/solid-scope-415202/flask-app']
+
+images:
+  - 'gcr.io/solid-scope-415202/flask-app'

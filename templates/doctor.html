@@ -1,0 +1,439 @@
+{% extends "base.html" %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+{% endblock %} {% block content %}
+<!-- Profil Pengguna -->
+<div
+  class="headerbg p-3 text-dark"
+  style="height: auto; background-color: white"
+>
+  <div class="container">
+    <div class="row">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('index') }}" style="color: #14335f">Beranda</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Dokter</li>
+        </ol>
+      </nav>
+      <h1 class="text-center">Profil Dokter</h1>
+      <div class="mt-5" style="display: flex; align-items: center">
+        <form
+          method="POST"
+          action="{{ url_for('uploadpp') }}"
+          enctype="multipart/form-data"
+        >
+          <label
+            for="profilePictureInput"
+            id="profilePictureLabel"
+            onclick="replaceImgWithInput()"
+          >
+            <img
+              class="img-fluid"
+              src="{{ image_url }}"
+              alt="Profile Picture"
+              style="
+                cursor: pointer;
+                object-fit: cover;
+                object-position: center;
+                height: 150px;
+                width: 150px;
+              "
+              id="profilePictureImg"
+            />
+          </label>
+          <input
+            type="submit"
+            style="display: none; margin: 0 auto; background-color: #14335f"
+            class="btn btn-primary mt-3"
+            id="editbutton"
+            value="Ubah"
+          />
+        </form>
+        <div style="margin-left: 20px">
+          <h3>{{ user_data[1] }} ({{user_data[6]}})</h3>
+          <h5>{{ user_data[3] }}</h5>
+          <h6>{{ user_data[2] }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabel Deteksi -->
+<div
+  class="headerbg p-3 text-dark mt-4 mb-5"
+  style="height: auto; background-color: white"
+>
+  <div class="container" style="text-align: center">
+    <h3>Riwayat Deteksi</h3>
+    <input
+      type="text"
+      id="searchInput1"
+      onkeyup="searchTable1()"
+      placeholder="Cari data riwayat deteksi (Tanggal dan Waktu/Nama Pasien)"
+      class="form-control mb-3"
+      style="border-color: #14335f"
+    />
+    <table
+      class="table table-striped table-hover table-default table-bordered"
+      id="dataTable1"
+    >
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Tanggal dan Waktu</th>
+          <th scope="col">Nama Pasien</th>
+          <th scope="col">Kategori</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for detection_row in detection_data %}
+        <tr>
+          <td>{{ detection_row[0] }}</td>
+          <td>{{ detection_row[3] }}</td>
+          <td>{{ detection_row[4] }}</td>
+          <td>{{ detection_row[2] }}</td>
+          <td>
+            <button
+              class="btn text-white btn-detail"
+              style="background-color: #14335f"
+              data-id="{{ detection_row[0] }}"
+              data-image="{{ detection_row[-1] }}"
+              data-label="{{ detection_row[2] }}"
+              data-datetime="{{ detection_row[3] }}"
+              data-patient="{{ detection_row[4] }}"
+              data-note="{{ detection_row[5] }}"
+              data-conf="{{ detection_row[7] }}"
+              data-doc="{{ detection_row[6] }}"
+              data-pnik="{{ detection_row[8] }}"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% for page_num in range(1, (total // per_page) + 2) %}
+        <li class="page-item {% if page == page_num %}active{% endif %}">
+          <a
+            class="page-link"
+            href="{{ url_for('doctor', page=page_num) }}"
+            style="{% if page == page_num %}color: white; background-color: #14335f;{% endif %}"
+            >{{ page_num }}</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Modal Detail Detection -->
+<div
+  class="modal fade"
+  id="detailDetectionModal"
+  tabindex="-1"
+  aria-labelledby="detailDetectionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailDetectionModalLabel">Detail Data</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div
+            class="col-md-6 d-flex align-items-center justify-content-center"
+          >
+            <img
+              class="img-fluid"
+              id="detailImage"
+              alt="Image"
+              style="max-height: 100%; width: 100%"
+            />
+          </div>
+          <div class="col-md-6">
+            <div
+              class="table-responsive"
+              style="max-height: 400px; overflow-y: auto"
+            >
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>ID</td>
+                    <td id="detailID"></td>
+                  </tr>
+                  <tr>
+                    <td>Tanggal dan Waktu</td>
+                    <td id="detailDateTime"></td>
+                  </tr>
+                  <tr>
+                    <td>NIK Pasien</td>
+                    <td id="detailPatientNIK"></td>
+                  </tr>
+                  <tr>
+                    <td>Nama Pasien</td>
+                    <td id="detailPatientName"></td>
+                  </tr>
+                  <tr>
+                    <td>Nama Dokter</td>
+                    <td id="detailDoctorName"></td>
+                  </tr>
+                  <tr>
+                    <td>Kategori</td>
+                    <td id="detailLabel"></td>
+                  </tr>
+                  <tr>
+                    <td>Keyakinan (%)</td>
+                    <td id="detailConfidence"></td>
+                  </tr>
+                  <tr>
+                    <td>Catatan</td>
+                    <td id="detailNote"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-danger mt-2"
+          id="deleteButton"
+          style="display: block; margin: 0 auto; float: left"
+        >
+          <i class="fa fa-trash"> Hapus</i>
+        </button>
+        <button
+          type="button"
+          id="editNoteButton"
+          class="btn mt-2 btn-warning"
+          style="display: block; margin: 0 auto; float: right"
+        >
+          <i class="fa fa-pencil"> Edit</i>
+        </button>
+        <button
+          type="button"
+          id="generatePDFButton"
+          class="btn mt-2 btn-success"
+          style="display: block; margin: 0 auto; float: right"
+        >
+          <i class="fa fa-download"> Unduh PDF</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi -->
+<div
+  class="modal fade"
+  id="confirmDeletionModal"
+  tabindex="-1"
+  aria-labelledby="confirmDeletionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeletionModalLabel">
+          Konfirmasi Penghapusan
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin menghapus data tersebut?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteButton">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $(".btn-detail").click(function () {
+      var id = $(this).data("id");
+      var image = $(this).data("image");
+      var label = $(this).data("label");
+      var datetime = $(this).data("datetime");
+      var patient = $(this).data("patient");
+      var note = $(this).data("note");
+      var conf = $(this).data("conf");
+      var doc = $(this).data("doc");
+      var pnik = $(this).data("pnik");
+
+      $("#detailPatientName").text(patient);
+      $("#detailPatientNIK").text(pnik);
+      $("#detailDoctorName").text(doc);
+      $("#detailID").text(id);
+      $("#detailImage").attr(
+        "src", image
+      );
+      $("#detailLabel").text(label);
+      $("#detailDateTime").text(datetime);
+      $("#detailNote").text(note);
+      $("#detailConfidence").text(conf);
+      $("#editNoteButton").data("id", id);
+      $("#detailDetectionModal").modal("show");
+    });
+
+    $("#editNoteButton").click(function () {
+      var detectionId = $(this).data("id");
+      var url =
+        "{{ url_for('doctor_detection_result') }}?detection_id=" + detectionId;
+      window.location.href = url;
+    });
+  });
+
+  function replaceImgWithInput() {
+    var imgElement = document.getElementById("profilePictureImg");
+    var inputFile = document.createElement("input");
+    inputFile.setAttribute("type", "file");
+    inputFile.setAttribute("name", "file");
+    inputFile.setAttribute("accept", "image/*");
+    inputFile.setAttribute("id", "profilePictureInput");
+    imgElement.parentNode.replaceChild(inputFile, imgElement);
+    document.getElementById("editbutton").style.display = "block";
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var deleteButton = document.getElementById("deleteButton");
+    var confirmDeleteButton = document.getElementById("confirmDeleteButton");
+    var detailID = document.getElementById("detailID");
+    var confirmModal = new bootstrap.Modal(
+      document.getElementById("confirmDeletionModal")
+    );
+
+    deleteButton.addEventListener("click", function () {
+      confirmModal.show();
+    });
+
+    confirmDeleteButton.addEventListener("click", function () {
+      var detectionId = detailID.innerText;
+      fetch("/change_status_detection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: detectionId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            confirmModal.hide();
+            location.reload();
+          } else {
+            console.error("Gagal mengubah status.");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    });
+  });
+  //fungsi cari data tabel
+  function searchTable1() {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("searchInput1");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dataTable1");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+      tr[i].style.display = "none";
+      td = tr[i].getElementsByTagName("td");
+
+      for (j = 1; j <= 3; j++) {
+        if (td[j]) {
+          txtValue = td[j].textContent || td[j].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+            break;
+          }
+        }
+      }
+    }
+  }
+  //fungsi save data detection to PDF file
+  document.addEventListener("DOMContentLoaded", function () {
+    const generatePDFButton = document.getElementById("generatePDFButton");
+    generatePDFButton.addEventListener("click", function () {
+      var doc = new jspdf.jsPDF();
+      doc.text("Hasil Pemeriksaan Pap Smear", 10, 10);
+      doc.text("ID: " + document.getElementById("detailID").innerText, 10, 20);
+      doc.text(
+        "Tanggal dan Waktu: " +
+          document.getElementById("detailDateTime").innerText,
+        10,
+        30
+      );
+      doc.text(
+        "NIK: " + document.getElementById("detailPatientNIK").innerText,
+        10,
+        40
+      );
+      doc.text(
+        "Pasien: " + document.getElementById("detailPatientName").innerText,
+        10,
+        50
+      );
+      doc.text(
+        "Dokter: " + document.getElementById("detailDoctorName").innerText,
+        10,
+        60
+      );
+      doc.text(
+        "Kategori: " + document.getElementById("detailLabel").innerText,
+        10,
+        70
+      );
+      doc.text(
+        "Catatan: " + document.getElementById("detailNote").innerText,
+        10,
+        80
+      );
+      doc.save(
+        "Hasil Pemeriksaan Pap Smear " +
+          document.getElementById("detailPatientName").innerText +
+          ".pdf"
+      );
+    });
+  });
+</script>
+{% endblock %}
